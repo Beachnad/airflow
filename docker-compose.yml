@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres:12.1
+
+  flyway:
+    image: flyway/flyway:6.4.1
+    volumes:
+    - ./flyway/sql:/flyway/sql
