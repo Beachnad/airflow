@@ -1,10 +1,27 @@
 version: "3.7"
 
 services:
+
   db:
     image: postgres:12.1
+    ports:
+    - 5432:5432
+    environment:
+      - POSTGRES_DATABASE=airflow
+    volumes:
+      - './db/init:/docker-entrypoint-initdb.d'
 
   flyway:
-    image: flyway/flyway:6.4.1
+    image: flyway/flyway
+    depends_on:
+      - db
     volumes:
-    - ./flyway/sql:/flyway/sql
+      - ./flyway/sql:/flyway/sql
+      - ./flyway/conf:/flyway/conf
+    command: migrate
+
+  airflow:
+    image: puckel/docker-airflow:1.10.7
+    depends_on:
+      - db
+      - flyway
