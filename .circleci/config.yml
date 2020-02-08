@@ -13,7 +13,12 @@ jobs:
       - checkout
       - run:
           name: Setup Container
-          command: sudo pip install -r requirements.txt
+          command: |
+            sudo pip install -r requirements.txt
+            echo 'export PATH="/home/circleci/.local/bin:${PATH}"' >> $BASH_ENV # disable-secrets-detection
+            echo 'export PYTHONPATH="/airflow/dags:/usr/local/lib/python3.7/site-packages"' >> $BASH_ENV
+            echo "=== sourcing $BASH_ENV ==="
+            source $BASH_ENV
       - run:
           name: Running Tests
           command: |
