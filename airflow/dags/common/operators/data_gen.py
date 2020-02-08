@@ -6,7 +6,7 @@ from airflow.hooks.postgres_hook import PostgresHook
 
 
 class PandasToPostgresOperator(BaseOperator):
-    template_fields = ('sql', 'destination_table', 'preoperator', 'fun_args')
+    template_fields = ('destination_table', 'preoperator', 'fun_args')
     template_ext = ('.sql', '.hql',)
     ui_color = '#42cef5'
 
@@ -14,9 +14,9 @@ class PandasToPostgresOperator(BaseOperator):
             self,
             destination_conn_id: str,
             destination_table: str,
-            preoperator: str,
             fun: Callable[..., pd.DataFrame],
             fun_args=None,
+            preoperator: str = None,
             *args, **kwargs
     ):
         super(PandasToPostgresOperator, self).__init__(*args, **kwargs)

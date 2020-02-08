@@ -20,8 +20,18 @@ services:
       - ./flyway/conf:/flyway/conf
     command: migrate
 
-  airflow:
+  webserver:
     image: puckel/docker-airflow:1.10.7
+    environment:
+      - POSTGRES_HOST=db
+      - LOAD_EX=n
+      - EXECUTOR=Local
+    volumes:
+      - ./airflow/dags:/usr/local/airflow/dags
+      - ./requirements.txt:/requirements.txt
+    ports:
+      - "8080:8080"
     depends_on:
       - db
       - flyway
+    command: webserver

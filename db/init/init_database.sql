@@ -1,4 +1,1 @@
 CREATE DATABASE airflow;
-
-CREATE USER flyway WITH PASSWORD 'flyway';
-GRANT ALL PRIVILEGES ON DATABASE airflow TO flyway;
