@@ -1,12 +1,6 @@
 from sportsreference.ncaab.boxscore import Boxscores, Boxscore
 from datetime import date as Date, timedelta, datetime
 import pandas as pd
-from typing import Pattern
-
-
-def extract(compiled_pattern: Pattern, x):
-    find = compiled_pattern.findall(x)
-    return find[0] if find else None
 
 
 def dates_between(start, end):
