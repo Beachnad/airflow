@@ -21,7 +21,3 @@ def test_dates_between():
     assert dates == [datetime(2020, 1, 1, 0, 0), datetime(2020, 1, 2, 0, 0),
                      datetime(2020, 1, 3, 0, 0), datetime(2020, 1, 4, 0, 0),
                      datetime(2020, 1, 5, 0, 0), datetime(2020, 1, 6, 0, 0)], "Test failed"
-
-
-def test_dummy():
-    assert False, "Just a test failure"
