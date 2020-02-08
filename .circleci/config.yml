@@ -18,4 +18,5 @@ jobs:
           name: Running Tests
           command: |
             echo $PYTHONPATH
+            export PYTHONPATH=/airflow/dags:/usr/local/lib/python3.7/site-packages
             python -m unittest
