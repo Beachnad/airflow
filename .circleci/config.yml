@@ -4,6 +4,8 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.7.5
+        environment:
+          PYTHONPATH: /airflow/dags:/usr/local/lib/python3.7/site-packages
 #      - image: circleci/postgres:12.1
 #        environment:
 #          POSTGRES_DATABASE=airflow
@@ -11,9 +13,7 @@ jobs:
       - checkout
       - run:
           name: Setup Container
-          command: |
-            export PATH=/airflow/dags/:$PATH
-            sudo pip install -r requirements.txt
+          command: sudo pip install -r requirements.txt
       - run:
           name: Running Tests
           command: python -m unittest
