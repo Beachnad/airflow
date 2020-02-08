@@ -13,9 +13,9 @@ jobs:
           command: sudo pip install -r requirements.txt
       - run:
           name: Running Tests
-          command: sudo py.test -v --junitxml="/tmp/results.xml" >> /tmp/results.txt
+          command: sudo py.test -v --junitxml="/tmp/test_results/results.xml" >> /tmp/results.txt
       - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-          path: /tmp/results.xml
+          path: /tmp/test_results
       - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: /tmp/results.txt
           destination: test_results
