@@ -7,7 +7,7 @@ services:
     ports:
     - 5432:5432
     environment:
-      - POSTGRES_DATABASE=src
+      - POSTGRES_DATABASE=airflow
     volumes:
       - './db/init:/docker-entrypoint-initdb.d'
 
@@ -21,13 +21,13 @@ services:
     command: migrate
 
   webserver:
-    image: puckel/docker-src:1.10.7
+    image: puckel/docker-airflow:1.10.7
     environment:
       - POSTGRES_HOST=db
       - LOAD_EX=n
       - EXECUTOR=Local
     volumes:
-      - ./src/dags:/usr/local/src/dags
+      - ./src/dags:/usr/local/airflow/dags
       - ./requirements.txt:/requirements.txt
     ports:
       - "8080:8080"

@@ -10,7 +10,7 @@ from scripts.sports import get_adv_boxscores
 default_args = {
     'owner': 'Airflow',
     'depends_on_past': False,  # Jan 2nd must wait for Jan 1st
-    'start_date': airflow.utils.dates.days_ago(7),
+    'start_date': "2010-10-01",
     'email': ['src@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,

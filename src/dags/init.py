@@ -9,7 +9,7 @@ import logging
 
 
 args = {
-    'owner': 'src',
+    'owner': 'airflow',
     'start_date': airflow.utils.dates.days_ago(7),
     'provide_context': True
 }
@@ -38,7 +38,7 @@ def init():
                      "conn_type": "postgres",
                      "host": "db",
                      "port": 5432,
-                     "schema": "src",
+                     "schema": "airflow",
                      "login": "postgres",
                      "password": "postgres"})
 
