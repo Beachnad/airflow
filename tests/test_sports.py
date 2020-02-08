@@ -1,6 +1,6 @@
 from unittest import TestCase
-from scripts.sports import ncaab_boxscores
 from datetime import date
+from src.dags.scripts.sports import ncaab_boxscores
 
 
 class Test(TestCase):

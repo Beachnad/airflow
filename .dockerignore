@@ -1,3 +1,3 @@
 # PyCharm
 /.idea
-airflow/dags/__pycache__
+src/dags/__pycache__

@@ -5,23 +5,12 @@ jobs:
     docker:
       - image: circleci/python:3.7.5
         environment:
-          PYTHONPATH: /airflow/dags:/usr/local/lib/python3.7/site-packages
-#      - image: circleci/postgres:12.1
-#        environment:
-#          POSTGRES_DATABASE=airflow
+          PYTHONPATH: /src/dags:/usr/local/lib/python3.7/site-packages
     steps:
       - checkout
       - run:
           name: Setup Container
-          command: |
-            sudo pip install -r requirements.txt
-            echo 'export PATH="/home/circleci/.local/bin:${PATH}"' >> $BASH_ENV # disable-secrets-detection
-            echo 'export PYTHONPATH="/airflow/dags:/usr/local/lib/python3.7/site-packages"' >> $BASH_ENV
-            echo "=== sourcing $BASH_ENV ==="
-            source $BASH_ENV
+          command: sudo pip install -r requirements.txt
       - run:
           name: Running Tests
-          command: |
-            echo $PYTHONPATH
-            export PYTHONPATH=/airflow/dags:/usr/local/lib/python3.7/site-packages
-            python -m unittest
+          command: python -m unittest

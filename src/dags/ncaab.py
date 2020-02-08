@@ -11,7 +11,7 @@ default_args = {
     'owner': 'Airflow',
     'depends_on_past': False,  # Jan 2nd must wait for Jan 1st
     'start_date': airflow.utils.dates.days_ago(7),
-    'email': ['airflow@example.com'],
+    'email': ['src@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,

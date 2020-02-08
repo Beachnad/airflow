@@ -1,4 +1,4 @@
-CREATE USER airflow WITH PASSWORD 'airflow';
+CREATE USER airflow WITH PASSWORD 'src';
 GRANT ALL PRIVILEGES ON DATABASE airflow TO airflow;
 
 CREATE SCHEMA staging;

@@ -9,7 +9,7 @@ import logging
 
 
 args = {
-    'owner': 'airflow',
+    'owner': 'src',
     'start_date': airflow.utils.dates.days_ago(7),
     'provide_context': True
 }
@@ -38,13 +38,13 @@ def init():
                      "conn_type": "postgres",
                      "host": "db",
                      "port": 5432,
-                     "schema": "airflow",
+                     "schema": "src",
                      "login": "postgres",
                      "password": "postgres"})
 
     new_var = models.Variable()
     new_var.key = "sql_path"
-    new_var.set_val("/usr/local/airflow/sql")
+    new_var.set_val("/usr/local/src/sql")
     session.add(new_var)
     session.commit()
 
