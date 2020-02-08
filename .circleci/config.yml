@@ -9,6 +9,11 @@ jobs:
 #          POSTGRES_DATABASE=airflow
     steps:
       - checkout
-      - run: export PYTHONPATH=/airflow/dags/:${PYTHONPATH}
-      - run: sudo pip install -r requirements.txt
-      - run: python -m unittest tests
+      - run:
+          name: Setup Container
+          command: |
+            export PYTHONPATH=/airflow/dags/:${PYTHONPATH}
+            sudo pip install -r requirements.txt
+      - run:
+          name: Running Tests
+          command: python -m unittest tests
