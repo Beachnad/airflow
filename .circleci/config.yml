@@ -16,4 +16,6 @@ jobs:
           command: sudo pip install -r requirements.txt
       - run:
           name: Running Tests
-          command: python -m unittest
+          command: |
+            echo $PYTHONPATH
+            python -m unittest
