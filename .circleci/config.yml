@@ -19,3 +19,26 @@ jobs:
       - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: /tmp/results.txt
           destination: test_results
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "43:ec:7d:e1:75:b6:e0:d2:90:53:67:51:46:2f:7b:62"
+      - run:
+          name: Deploy Over SSH
+          command: |
+            ssh circleci@dbshiny.com "echo 'Connected'"
+
+workflows:
+   version: 2
+   build-and-deploy:
+     jobs:
+       - build
+       - deploy:
+           requires:
+             - build # only deploy once build job has completed
+           filters:
+             branches:
+               only: master # only deploy on the master branch
