@@ -1,1 +1,8 @@
-echo "The deploy script ran, now it is time to actually make it do something."
+database_exists=$(psql -ltq | cut -d \| -f 1 | grep -w 'airflow')
+
+if ${database_exists}
+then
+  echo "It exists"
+else
+  echo "Nope..."
+fi
