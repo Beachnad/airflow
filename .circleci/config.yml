@@ -29,7 +29,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            ssh circleci@dbshiny.com "sh deploy.sh"
+            ssh circleci@dbshiny.com "cd ~/airflow && git pull origin master && sh deploy.sh"
 
 workflows:
    version: 2
