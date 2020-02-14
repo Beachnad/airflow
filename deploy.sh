@@ -1,0 +1,1 @@
+cd ~/airflow && git pull origin master
