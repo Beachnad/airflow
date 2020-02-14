@@ -13,11 +13,12 @@ services:
 
   flyway:
     image: flyway/flyway
+    env_file:
+      - .env
     depends_on:
       - db
     volumes:
       - ./flyway/sql:/flyway/sql
-      - ./flyway/conf:/flyway/conf
     command: migrate
 
   webserver:
