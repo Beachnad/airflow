@@ -15,6 +15,7 @@ services:
     image: flyway/flyway
     env_file:
       - .env
+    network_mode: ${DC_NETWORK_MODE:-host}
     depends_on:
       - db
     volumes:
