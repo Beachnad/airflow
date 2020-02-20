@@ -32,13 +32,16 @@ def get_year_boxscores(start, end) -> pd.DataFrame:
     dates = dates_between(start, end)
     for i, date in enumerate(dates, start=0):
         boxscore = ncaab_boxscores(date)
-        data.extend(boxscore)
+        if len(boxscore) >= 1:
+            data.extend(boxscore)
 
     return pd.DataFrame(data)
 
 
 def get_adv_boxscores(start, end):
-    ids = get_year_boxscores(start, end)['boxscore']
-    df = pd.concat([Boxscore(id).dataframe for id in ids])
-    df['date'] = df['date'].apply(lambda x: datetime.strptime(x, '%B %d, %Y'))
+    df = get_year_boxscores(start, end)
+    if len(df) > 0:
+        ids = get_year_boxscores(start, end)['boxscore'] if len(df) > 0 else pd.Series([])
+        df = pd.concat([Boxscore(id).dataframe for id in ids])
+        df['date'] = df['date'].apply(lambda x: datetime.strptime(x, '%B %d, %Y'))
     return df

@@ -32,13 +32,13 @@ class PandasToPostgresOperator(BaseOperator):
 
     def execute(self, context):
         df = self.get_data_frame()
+        if df is not None:
+            destination_hook = PostgresHook.get_hook(self.destination_conn_id)
+            if self.preoperator:
+                self.log.info("Running preoperator")
+                self.log.info(self.preoperator)
+                destination_hook.run(self.preoperator)
 
-        destination_hook = PostgresHook.get_hook(self.destination_conn_id)
-        if self.preoperator:
-            self.log.info("Running preoperator")
-            self.log.info(self.preoperator)
-            destination_hook.run(self.preoperator)
-
-        self.log.info(f"Inserting data frame into {self.destination_conn_id}")
-        destination_hook.insert_rows(table=self.destination_table, rows=df.itertuples())
+            self.log.info(f"Inserting data frame into {self.destination_conn_id}")
+            destination_hook.insert_rows(table=self.destination_table, rows=df.itertuples())
 
