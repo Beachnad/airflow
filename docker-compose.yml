@@ -32,7 +32,7 @@ services:
       - ./src/dags:/usr/local/airflow/dags
       - ./requirements.txt:/requirements.txt
     ports:
-      - "8080:8080"
+      - "1234:8080"
     depends_on:
       - db
       - flyway
