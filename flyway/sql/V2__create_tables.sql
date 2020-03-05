@@ -1,5 +1,3 @@
-CREATE SCHEMA staging;
-
 CREATE TABLE staging.box_scores (
     box_score_id VARCHAR(128) PRIMARY KEY,
     away_assist_percentage NUMERIC,

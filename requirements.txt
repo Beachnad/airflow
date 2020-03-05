@@ -1,2 +1,10 @@
+apache-airflow[celery,postgres,hive,hdfs,jdbc,async,password,crypto,github_enterprise,datadog,statsd,s3,mysql,google_auth,gcp_api,kubernetes]==1.10.9
+pandas==1.0.1
+pymssql<3.0
+holidays==0.9.12
+psycopg2-binary==2.8.4
+redis==3.2
+hiredis
+requests
 sportsreference==0.4.7
 pytest==5.3.5

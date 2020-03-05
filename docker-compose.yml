@@ -1,39 +1,86 @@
-version: "3.7"
+version: '2.4'
 
 services:
 
   db:
-    image: postgres:12.1
+    image: postgres:12.1-alpine
     ports:
-    - 5432:5432
+      - "5432:5432"
     environment:
-      - POSTGRES_DATABASE=airflow
-    volumes:
-      - './db/init:/docker-entrypoint-initdb.d'
+      - POSTGRES_PASSWORD=postgres
+#    volumes:
+#    - ./db/postgresql.conf:/etc/postgresql/postgresql.conf
+#    command: -c 'config_file=/etc/postgresql/postgresql.conf'
 
   flyway:
     image: flyway/flyway
-    env_file:
-      - .env
-    network_mode: ${DC_NETWORK_MODE:-host}
+    volumes:
+      - ./flyway/conf:/flyway/conf
+      - ./flyway/sql:/flyway/sql
+    command: ["migrate"]
+    environment:
+      - FLYWAY_PLACEHOLDERS_AIRFLOW_PASS=${AIRFLOW_PASS:-airflow}
+      - FLYWAY_PLACEHOLDERS_CELERY_PASS=${CELERY_PASS:-celery}
+      - FLYWAY_PLACEHOLDERS_WORKER_PASS=${WORKER_PASS:-worker}
     depends_on:
       - db
-    volumes:
-      - ./flyway/sql:/flyway/sql
-    command: migrate
 
-  webserver:
-    image: puckel/docker-airflow:1.10.7
-    environment:
-      - POSTGRES_HOST=db
-      - LOAD_EX=n
-      - EXECUTOR=Local
+  redis:
+    image: redis:3.2
+
+  app:
+    build:
+      context: .
+      # TODO: make a Dockerfile.dev
+      dockerfile: Dockerfile
+    restart: "no"
     volumes:
-      - ./src/dags:/usr/local/airflow/dags
-      - ./requirements.txt:/requirements.txt
+      - ./src/dags:/app/dags
+      - ./src/sql:/app/sql
+    command: "true"
+
+  web:
+    extends:
+      service: app
+    restart: always
     ports:
-      - "1234:8080"
+      - "8000:8000"
     depends_on:
+      - app
+    links:
       - db
       - flyway
-    command: webserver
+      - redis
+    command: web
+
+  worker:
+    extends:
+      service: app
+    restart: always
+    mem_limit: 4294967296
+    ports:
+      - "8793:8793"
+    links:
+      - db
+      - redis
+    command: worker
+
+  scheduler:
+    mem_limit: 4294967296
+    extends:
+      service: app
+    restart: always
+    links:
+      - db
+      - redis
+    command: scheduler
+
+  flower:
+    extends:
+      service: app
+    restart: always
+    ports:
+      - "5555:5555"
+    links:
+      - redis
+    command: flower

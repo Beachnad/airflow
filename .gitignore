@@ -131,4 +131,4 @@ dmypy.json
 # PyCharm
 /.idea
 *.env
-init.sql
+db/init.sql

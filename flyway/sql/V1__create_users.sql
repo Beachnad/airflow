@@ -1,0 +1,15 @@
+CREATE SCHEMA staging;
+
+CREATE DATABASE airflow;
+CREATE USER airflow WITH PASSWORD '${airflow_pass}';
+GRANT ALL PRIVILEGES ON DATABASE airflow to airflow;
+
+CREATE DATABASE celery;
+CREATE USER celery WITH PASSWORD '${celery_pass}';
+GRANT ALL PRIVILEGES ON DATABASE celery to celery;
+
+CREATE USER worker WITH PASSWORD '${worker_pass}';
+-- TODO: add ALTER DEFAULT statements here
+GRANT ALL PRIVILEGES ON DATABASE postgres to worker;
+GRANT ALL PRIVILEGES ON SCHEMA staging to worker;
+GRANT SELECT, UPDATE, DELETE, INSERT ON ALL TABLES IN SCHEMA staging to worker;
